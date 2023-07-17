@@ -8,10 +8,11 @@ import (
 
 // Config : struct
 type Config struct {
-	Environment    string `json:"env"`
-	Port           int    `json:"port"`
-	Db             string `json:"db"`
-	TokenSecretKey string `json:"token_secret_key"`
+	Environment         string `json:"env"`
+	Port                int    `json:"port"`
+	Db                  string `json:"db"`
+	TokenSecretKey      string `json:"token_secret_key"`
+	AdminTokenSecretKey string `json:"admin_token_secret_key"`
 }
 
 var config *Config
