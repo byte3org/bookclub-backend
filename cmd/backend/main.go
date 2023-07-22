@@ -7,7 +7,6 @@ import (
 
 	"github.com/byte3/bookclub/backend/api/v1/router"
 	"github.com/byte3/bookclub/backend/config"
-	"github.com/byte3/bookclub/backend/helpers/jwt"
 	"github.com/byte3/bookclub/backend/internal/database"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -26,14 +25,12 @@ func initializeBookclubRoutes(r *chi.Mux) {
 func initializeBookclubServer(config *config.Config) *chi.Mux {
 	r := chi.NewRouter()
 
-	auth := jwt.JWT{}.New()
 	r.Use(
 		middleware.RedirectSlashes,
 		middleware.Recoverer,
 		middleware.Heartbeat("/health"),
 		middleware.Logger,
 		middleware.AllowContentType("application/json"),
-		auth.Verifier(),
 	)
 
 	r.Use(middleware.Timeout(20 * time.Second))
