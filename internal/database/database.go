@@ -1,7 +1,6 @@
 package database
 
 import (
-	"errors"
 	"log"
 
 	"gorm.io/driver/postgres"
@@ -45,15 +44,26 @@ func Initialize(config *config.Config) {
 	}
 }
 
-func SelectUserbyName(username string) (models.User, error) {
-	var user models.User
-	Db.Where("username = ?", username).First(&user)
-	if user == (models.User{}) {
-		return models.User{}, errors.New("user not found")
-	}
-	return user, nil
+func SelectAllUsers() ([]models.User, error) {
+	users := []models.User{}
+	result := Db.Find(&users)
+	return users, result.Error
 }
 
-func InsertUser(username string, email string, password string) {
+func SelectUserbyName(username string) (models.User, error) {
+	var user models.User
+	result := Db.Where("username = ?", username).First(&user)
+	return user, result.Error
+}
 
+func InsertUser(user *models.User) (int, error) {
+	result := Db.Create(&user)
+
+	return int(result.RowsAffected), result.Error
+}
+
+func GetUserDetails(id int) (models.User, error) {
+	var user models.User
+	result := Db.First(&user, id)
+	return user, result.Error
 }
