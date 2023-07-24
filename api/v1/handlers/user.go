@@ -154,5 +154,12 @@ func GetUserDetails(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type" "application/json")
 
+	id, err := strconv.Atoi(r.Context().Value("id").(string))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	database.DeleteUser(id)
+	w.WriteHeader(http.StatusAccepted)
 }
