@@ -33,6 +33,11 @@ CREATE TABLE BookGenres {
     name VARCHAR(10),
 };
 
+/*
+available
+borrowed
+lost
+*/
 CREATE TABLE BookAvailability {
     id INT GENERATED ALWAYS AS IDENTITY,
     availability VARCHAR(20),
@@ -58,6 +63,11 @@ CREATE TABLE Books {
     PRIMARY KEY(id)
 };
 
+/*
+pending
+accepted
+returned
+*/
 CREATE TABLE BookRequestStatus {
     id INT GENERATED ALWAYS AS IDENTITY,
     status VARCHAR(10),
@@ -69,7 +79,7 @@ CREATE TABLE BookRequests {
     title VARCHAR(20),
     CONSTRAINT fk_author FOREIGN KEY(author) REFERENCES Authors(id),
     CONSTRAINT fk_requestor FOREIGN KEY(requestor) REFERENCES Users(id),
-    CONSTRAINT fk_status FOREIGN KEY(status) REFERENCES BookRequestStatus(id),
+    CONSTRAINT fk_status FOREIGN KEY(request_status) REFERENCES BookRequestStatus(id),
     requested_date TIMESTAMP,
     PRIMARY KEY(id)
 };
