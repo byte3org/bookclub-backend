@@ -38,4 +38,6 @@ func (u User) Routes() chi.Router {
 			r.Delete("/", userhandler.DeleteUser)
 		})
 	})
+
+	return r
 }
