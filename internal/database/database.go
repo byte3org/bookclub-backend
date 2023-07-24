@@ -51,19 +51,37 @@ func SelectAllUsers() ([]models.User, error) {
 }
 
 func SelectUserbyName(username string) (models.User, error) {
-	var user models.User
+	user := models.User{}
 	result := Db.Where("username = ?", username).First(&user)
 	return user, result.Error
 }
 
 func InsertUser(user *models.User) (int, error) {
-	result := Db.Create(&user)
+	result := Db.Create(user)
 
 	return int(result.RowsAffected), result.Error
 }
 
 func GetUserDetails(id int) (models.User, error) {
-	var user models.User
+	user := models.User{}
 	result := Db.First(&user, id)
 	return user, result.Error
+}
+
+func SelectAllRequests() ([]models.BookRequest, error) {
+	reqs := []models.BookRequest{}
+	result := Db.Find(&reqs)
+	return reqs, result.Error
+}
+
+func InsertRequest(req *models.BookRequest) (int, error) {
+	result := Db.Create(req)
+
+	return int(result.RowsAffected), result.Error
+}
+
+func SelectAllPendingRequests() ([]models.BookRequest, error) {
+	reqs := []models.BookRequest{}
+
+	results := Db.Where("")
 }
