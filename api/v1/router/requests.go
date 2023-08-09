@@ -13,7 +13,6 @@ type Request struct{}
 func (re Request) Routes() chi.Router {
 	r := chi.NewRouter()
 
-	// these endpoints are only available to admin service
 	r.Group(func(r chi.Router) {
 		r.Use(jwtauth.Verifier(jwt.TokenAuth))
 		r.Get("/", requestshandler.GetAllRequests)
@@ -27,8 +26,8 @@ func (re Request) Routes() chi.Router {
 		r.Use(jwtauth.Verifier(jwt.TokenAuth))
 		r.Route("/{id}", func(r chi.Router) {
 			r.Use(middlewares.RequestCtx)
-			r.Get("/", requestshandler.GetUserDetails)
-			r.Delete("/", requestshandler.DeleteUser)
+			r.Get("/", requestshandler.GetRequestDetails)
+			r.Get("/", requestshandler.DeleteRequest)
 		})
 	})
 
