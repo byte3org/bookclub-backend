@@ -33,8 +33,7 @@ func Initialize(config *config.Config) {
 		&models.BookRequest{},
 		&models.BookRequestAccepted{},
 		&models.BookRequestDeclined{},
-		&models.BookRequestStatus{},
-		&models.BookReturns{},
+		&models.BookRequestStatus{}, &models.BookReturns{},
 		&models.ISBNVersion{},
 		&models.User{},
 		&models.UserAddressInfo{},
@@ -62,7 +61,7 @@ func InsertUser(user *models.User) (int, error) {
 	return int(result.RowsAffected), result.Error
 }
 
-func GetUserDetails(id int) (models.User, error) {
+func SelectUserById(id int) (models.User, error) {
 	user := models.User{}
 	result := Db.First(&user, id)
 	return user, result.Error
@@ -76,12 +75,32 @@ func SelectAllRequests() ([]models.BookRequest, error) {
 
 func InsertRequest(req *models.BookRequest) (int, error) {
 	result := Db.Create(req)
-
 	return int(result.RowsAffected), result.Error
+}
+
+func SelectAllAcceptedRequests() ([]models.BookRequest, error) {
+	reqs := []models.BookRequest{}
+	results := Db.Where("request_status = accepted").Find(&reqs)
+
+	return reqs, results.Error
 }
 
 func SelectAllPendingRequests() ([]models.BookRequest, error) {
 	reqs := []models.BookRequest{}
+	results := Db.Where("request_status = pending").Find(&reqs)
 
-	results := Db.Where("")
+	return reqs, results.Error
+}
+
+func SelectRequestById(id int) (models.BookRequest, error) {
+	req := models.BookRequest{}
+	result := Db.First(&req, id)
+	return req, result.Error
+}
+
+func DeleteRequestById(id int) error {
+	var req models.BookRequest
+	req.Id = id
+	result := Db.Delete(&req)
+	return result.Error
 }

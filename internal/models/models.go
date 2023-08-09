@@ -87,7 +87,7 @@ type BookRequest struct {
 	Author          Author
 	RequestorId     int `json:"requestor"`
 	Requester       User
-	RequestStatusId int `json:"status"`
+	RequestStatusId int `json:"request_status"`
 	RequestStatus   BookRequestStatus
 	RequestedDate   time.Time `json:"requested_date" gorm:"datetime:timestamp;default:CURRENT_TIMESTAMP"`
 }
