@@ -7,10 +7,10 @@ import (
 
 func SetupRoutes() *chi.Mux {
 	r := chi.NewRouter()
-	r.Mount("/user", User{}.Routes())
-	r.Mount("/book", Book{}, Routes())
-	r.Mount("/author", Author{}.Routes())
-	r.Mount("/requests", Requests{}.Routes())
+
+//	r.Mount("/book", Book{}, Routes())
+//	r.Mount("/author", Author{}.Routes())
+	r.Mount("/requests", Request{}.Routes())
 
 	return r
 }
