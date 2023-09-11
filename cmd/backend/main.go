@@ -15,7 +15,7 @@ import (
 func initializeBookclubRoutes(r *chi.Mux) {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
-		w.Write([]byte("destra command and control"))
+		w.Write([]byte("book club server"))
 	})
 	r.Route("/v1", func(r chi.Router) {
 		r.Mount("/", router.SetupRoutes())
