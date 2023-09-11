@@ -138,7 +138,7 @@ func GetUserDetails(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	user, err := database.GetUserDetails(id)
+	user, err := database.SelectUserById(id)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -154,7 +154,7 @@ func GetUserDetails(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteUser(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type" "application/json")
+	w.Header().Set("Content-Type", "application/json")
 
 	id, err := strconv.Atoi(r.Context().Value("id").(string))
 	if err != nil {

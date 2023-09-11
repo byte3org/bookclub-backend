@@ -11,4 +11,6 @@ func SetupRoutes() *chi.Mux {
 	r.Mount("/book", Book{}, Routes())
 	r.Mount("/author", Author{}.Routes())
 	r.Mount("/requests", Requests{}.Routes())
+
+	return r
 }

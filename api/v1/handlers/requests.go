@@ -131,4 +131,13 @@ func GetRequestDetails(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func 
+func DeleteRequest(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	id, err := strconv.Atoi(r.Context().Value("id").(string))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	database.DeleteRequestById(id)
+	w.WriteHeader(http.StatusAccepted)
+}
