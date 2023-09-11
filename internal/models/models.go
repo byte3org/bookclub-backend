@@ -14,6 +14,13 @@ type User struct {
 	Password string `json:"password"`
 }
 
+type UserDto struct {
+	gorm.Model
+	Id       int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
+	Username string `json:"username"`
+	Email    string `json:"email"`
+}
+
 type UserAddressInfo struct {
 	gorm.Model
 	Id         int     `json:"id" gorm:"primaryKey;autoIncrement:true"`
