@@ -49,6 +49,9 @@ func main() {
 	// initialize database
 	database.Initialize(config)
 
+	// initialize server
 	r := initializeBookclubServer(config)
 
+	// start listener
+	http.ListenAndServe(":"+config.Port, r)
 }
