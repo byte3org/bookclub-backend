@@ -9,6 +9,7 @@ import (
 // Config : struct
 type Config struct {
 	Environment         string `json:"env"`
+    Host                string `json:"host"`
 	Port                string `json:"port"`
 	DbString            string `json:"db"`
 }
