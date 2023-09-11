@@ -33,7 +33,8 @@ func Initialize(config *config.Config) {
 		&models.BookRequest{},
 		&models.BookRequestAccepted{},
 		&models.BookRequestDeclined{},
-		&models.BookRequestStatus{}, &models.BookReturns{},
+		&models.BookRequestStatus{}, 
+        &models.BookReturns{},
 		&models.ISBNVersion{},
 	); err != nil {
 		log.Fatal(err.Error())
