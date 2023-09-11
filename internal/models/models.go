@@ -6,62 +6,34 @@ import (
 	"gorm.io/gorm"
 )
 
-type User struct {
-	gorm.Model
-	Id       int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
-}
-
-type UserDto struct {
-	gorm.Model
-	Id       int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
-	Username string `json:"username"`
-	Email    string `json:"email"`
-}
-
-type UserAddressInfo struct {
-	gorm.Model
-	Id         int     `json:"id" gorm:"primaryKey;autoIncrement:true"`
-	Address    string  `json:"address"`
-	Longitudes float64 `json:"longitudes"`
-	Latitudes  float64 `json:"latitudes"`
-	UserId     int     `json:"user"`
-	User       User
-}
-
-type UserContactInfo struct {
-	gorm.Model
-	Id      int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
-	Contact string `json:"contact"`
-	UserId  int    `json:"user"`
-	User    User
-}
-
 type Author struct {
 	gorm.Model
 	Id    int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	Name  string `json:"name"`
 	Email string `json:"email"`
+    Books        []Book `gorm:"foreignKey:AuthorId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"` 
+    BookRequests []BookRequest `gorm:"foreignKey:AuthorId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"` 
 }
 
 type BookGenre struct {
 	gorm.Model
 	Id   int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	Name string `json:"name"`
+    Books        []Book `gorm:"foreignKey:GenreId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"` 
 }
 
 type BookAvailability struct {
 	gorm.Model
 	Id           int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	Availability string `json:"availability"`
+    Books        []Book `gorm:"foreignKey:BookAvailabilityId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"` 
 }
 
 type ISBNVersion struct {
 	gorm.Model
 	Id   int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	Name string `json:"name"`
+    Books        []Book `gorm:"foreignKey:ISBNVersionId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"` 
 }
 
 type Book struct {
@@ -71,58 +43,53 @@ type Book struct {
 	ISBN               string `json:"isbn"`
 	Picture            string `json:"picture_url"`
 	ISBNVersionId      int    `json:"isbn_version"`
-	ISBNVersion        ISBNVersion
 	AuthorId           int `json:"author"`
-	Author             Author
 	OwnerId            int `json:"owner"`
-	Owner              User
 	GenreId            int `json:"genre"`
-	Genre              BookGenre
 	BookAvailabilityId int `json:"availability"`
-	Availability       BookAvailability
+    AcceptedBookRequests []BookRequestAccepted `gorm:"foreignKey:BookId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`	
 }
 
 type BookRequestStatus struct {
+    gorm.Model
 	Id     int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	Status string `json:"status"`
+    BookRequests []BookRequest `gorm:"foreignKey:RequestStatusId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
 
 type BookRequest struct {
+    gorm.Model
 	Id              int    `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	Title           string `json:"title"`
 	AuthorId        int    `json:"author"`
-	Author          Author
-	RequestorId     int `json:"requestor"`
-	Requester       User
+	RequestorId     int `json:"requestor"`	
 	RequestStatusId int `json:"request_status"`
-	RequestStatus   BookRequestStatus
 	RequestedDate   time.Time `json:"requested_date" gorm:"datetime:timestamp;default:CURRENT_TIMESTAMP"`
+    AcceptedBookRequests BookRequestAccepted `gorm:"foreignKey:RequestId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
+    DeclinedBookRequests BookRequestDeclined `gorm:"foreignKey:RequestId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
 
 type BookRequestAccepted struct {
+    gorm.Model
 	Id           int `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	BookId       int `json:"book"`
-	Book         Book
 	BorrowerId   int `json:"borrower"`
-	Borrower     User
 	BorroweeId   int `json:"borrowee"`
-	Borrowee     User
 	RequestId    int `json:"request"`
-	Request      BookRequest
 	AcceptedDate time.Time `json:"accepted_date" gorm:"datetime:timestamp;default:CURRENT_TIMESTAMP"`
+    BookRequestReturn BookReturns `gorm:"foreignKey:AcceptedRequestId,constraint:OnUpdate:CASCADE,OnDelete:SET NULL"`
 }
 
 type BookRequestDeclined struct {
+    gorm.Model
 	Id             int `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	RequestId      int `json:"request"`
-	Request        BookRequest
 	DeclinedUserId int `json:"declined_user"`
-	DeclinedUser   User
 }
 
 type BookReturns struct {
+    gorm.Model
 	Id                int `json:"id" gorm:"primaryKey;autoIncrement:true"`
 	AcceptedRequestId int `json:"accepted_request"`
-	AcceptedRequest   BookRequestAccepted
 	ReturnedDate      time.Time `json:"returned_date" gorm:"datetime:timestamp;default:CURRENT_TIMESTAMP"`
 }
