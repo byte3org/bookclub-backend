@@ -2,7 +2,7 @@ package middlewares
 
 import "net/http"
 
-func CheckContentType(next http.Handler) http.Handler {
+func CheckRequestContentType(next http.Handler) http.Handler {
     return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
         if r.Header.Get("Content-Type") != "application/json" {
             msg := "Content-Type header is not application/json"
