@@ -15,10 +15,10 @@ import (
 func initializeBookclubRoutes(r *chi.Mux) {
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/plain")
-		w.Write([]byte("book club server"))
+		w.Write([]byte("bookclub server"))
 	})
-	r.Route("/v1", func(r chi.Router) {
-		r.Mount("/", router.SetupRoutes())
+	r.Route("/api", func(r chi.Router) {
+		r.Mount("/v1", router.SetupRoutes())
 	})
 }
 
@@ -41,8 +41,6 @@ func initializeBookclubServer(config *config.Config) *chi.Mux {
 }
 
 func main() {
-	log.Println("[!] Starting bookclub services...")
-
 	// load config file
 	config := config.GetConfig()
 
@@ -52,6 +50,8 @@ func main() {
 	// initialize server
 	r := initializeBookclubServer(config)
 
+    log.Printf("[!] Starting bookclub services on %s:%s", config.Host, config.Port)
+
 	// start listener
-	http.ListenAndServe(":"+config.Port, r)
+    http.ListenAndServe(config.Host+ ":" +config.Port, r)
 }
