@@ -9,15 +9,13 @@ import (
 // Config : struct
 type Config struct {
 	Environment         string `json:"env"`
-	Port                int    `json:"port"`
-	Db                  string `json:"db"`
-	TokenSecretKey      string `json:"token_secret_key"`
-	AdminTokenSecretKey string `json:"admin_token_secret_key"`
+	Port                string `json:"port"`
+	DbString            string `json:"db"`
 }
 
 var config *Config
 
-func initialize() {
+func init() {
 	file, err := os.Open("config/config.json")
 	if err != nil {
 		log.Fatal("[x] error : ", err.Error())
