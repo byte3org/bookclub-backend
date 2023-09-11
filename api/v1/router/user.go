@@ -23,7 +23,6 @@ func (u User) Routes() chi.Router {
 	})
 
 	r.Group(func(r chi.Router) {
-		r.Use(jwtauth.Verifier(jwt.TokenAuth))
 		r.Post("/register", userhandler.CreateUser)
 		r.Post("/login", userhandler.AuthenticateUser)
 	})

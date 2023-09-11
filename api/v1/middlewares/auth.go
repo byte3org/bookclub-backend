@@ -7,14 +7,15 @@ import (
 	"github.com/lestrrat-go/jwx/jwt"
 )
 
-func EnsureAdminAuth(next http.Handler) http.Handler {
+func EnsureAdmin(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
+	})
 }
 
 func EnsureAuth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		token, _, err := jwtauth.FromContext(r.Context())
-
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
