@@ -3,7 +3,6 @@ package requestshandler
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -12,9 +11,6 @@ import (
 )
 
 func GetAllRequests(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-    log.Println("helo baby")
 	requests, err := database.SelectAllRequests()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -32,14 +28,6 @@ func GetAllRequests(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateRequest(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	if r.Header.Get("Content-Type") != "application/json" {
-		msg := "Content-Type Header is not application/json"
-		http.Error(w, msg, http.StatusUnsupportedMediaType)
-		return
-	}
-
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -74,8 +62,6 @@ func GetAllRequestsCount(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllPendingRequests(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	pending_reqs, err := database.SelectAllPendingRequests()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -93,8 +79,6 @@ func GetAllPendingRequests(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllAcceptedRequests(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	accepted_reqs, err := database.SelectAllAcceptedRequests()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -112,8 +96,6 @@ func GetAllAcceptedRequests(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetRequestDetails(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	id, err := strconv.Atoi(r.Context().Value("id").(string))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -134,8 +116,6 @@ func GetRequestDetails(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteRequest(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
 	id, err := strconv.Atoi(r.Context().Value("id").(string))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
