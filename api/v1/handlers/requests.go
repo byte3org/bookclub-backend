@@ -3,6 +3,7 @@ package requestshandler
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -13,6 +14,7 @@ import (
 func GetAllRequests(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
+    log.Println("helo baby")
 	requests, err := database.SelectAllRequests()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
