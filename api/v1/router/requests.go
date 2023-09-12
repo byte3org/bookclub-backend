@@ -11,6 +11,10 @@ type Request struct{}
 
 func (re Request) Routes() chi.Router {
 	r := chi.NewRouter()
+    r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+        w.Header().Set("Content-Type", "text/plain")
+        w.Write([]byte("requests"))
+    })
 
 	r.Group(func(rootRequestRoutes chi.Router) {
 		rootRequestRoutes.Get("/", requestshandler.GetAllRequests)
