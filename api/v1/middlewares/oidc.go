@@ -18,3 +18,10 @@ func ExtractOidcToken(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
+
+func ExtractUserIdfromOidc(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        // extract oidc token from request context
+        // do the client things
+    })
+}
