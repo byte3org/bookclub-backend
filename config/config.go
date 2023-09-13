@@ -12,6 +12,7 @@ type Config struct {
     Host                string `json:"host"`
 	Port                string `json:"port"`
 	DbString            string `json:"db"`
+    BookclubAuth        string `json:"auth"`
 }
 
 var config *Config
