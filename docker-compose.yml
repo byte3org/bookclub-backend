@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+    db:
+        container_name: db
+        image: postgres
+        restart: always
+        environment:
+          - POSTGRES_PASSWORD=dev
+          - POSTGRES_USER=bookclub_dev
+          - POSTGRES_DB=bookclub
+        volumes:
+          - pgdata:/var/lib/postgresql/data
+
+    backend:
+        container_name: backend
+        depends_on:
+            - db
+        build: .
+volumes:
+  pgdata:
