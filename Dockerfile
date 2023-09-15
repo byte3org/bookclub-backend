@@ -11,4 +11,6 @@ RUN chmod +x /wait-for-it.sh
 
 COPY . .
 
+EXPOSE 8001
+
 CMD ["bash","/wait-for-it.sh", "db:5432", "--", "go", "run", "./cmd/backend/main.go"]

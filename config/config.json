@@ -1,6 +1,6 @@
 {
     "env": "dev",
-    "host": "db",
+    "host": "0.0.0.0",
     "port": "8001",
     "db": "postgres://bookclub_dev:dev@db:5432/bookclub?sslmode=disable",
     "auth": "auth service"

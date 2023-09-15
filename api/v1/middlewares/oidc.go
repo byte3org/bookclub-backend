@@ -43,7 +43,7 @@ func ExtractUserIdfromOidc(next http.Handler) http.Handler {
             return
         }
         defer res.Body.Close()
-        jsonRes, err := helpers.ParseJsonBody(res.Body)
+        jsonRes, err := helpers.ParseJson(res.Body)
         if err != nil {
             http.Error(w, err.Error(), http.StatusInternalServerError)
             return
