@@ -1,13 +1,13 @@
-package requestshandler
+package handlers
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/byte3/bookclub/backend/internal/database"
 	"github.com/byte3/bookclub/backend/internal/models"
+	"github.com/google/uuid"
 )
 
 func GetAllRequests(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +34,7 @@ func CreateRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req models.BookRequest
+	var req models.BookRequestModel
 	err = json.Unmarshal(body, &req)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -96,7 +96,7 @@ func GetAllAcceptedRequests(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetRequestDetails(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.Context().Value("id").(string))
+	id, err := uuid.Parse(r.Context().Value("id").(string))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
@@ -116,7 +116,7 @@ func GetRequestDetails(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteRequest(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.Context().Value("id").(string))
+	id, err := uuid.Parse(r.Context().Value("id").(string))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

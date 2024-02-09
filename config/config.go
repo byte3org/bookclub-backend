@@ -8,10 +8,11 @@ import (
 
 // Config : struct
 type Config struct {
-	Environment         string `json:"env"`
-    Host                string `json:"host"`
-	Port                string `json:"port"`
-	DbString            string `json:"db"`
+	Environment    string `json:"env"`
+	Host           string `json:"host"`
+	Port           string `json:"port"`
+	DbString       string `json:"db"`
+	AuthServiceUrl string `json:"auth"`
 }
 
 var config *Config
@@ -25,7 +26,7 @@ func init() {
 	conf := Config{}
 	err = decoder.Decode(&conf)
 	if err != nil {
-		log.Fatal("[x] error", err.Error())
+        log.Fatal("[x] error : ", err.Error())
 	}
 	config = &conf
 }
