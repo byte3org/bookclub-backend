@@ -2,6 +2,6 @@
     "env": "dev",
     "host": "0.0.0.0",
     "port": "8001",
-    "db": "postgres://postgres:rxOred123@bookclub-backend.cvas2u6miwhv.eu-north-1.rds.amazonaws.com/postgres?charset=utf8&parseTime=True&loc=Local"
+    "db": "postgres://postgres:rxOred123@bookclub-backend.cvas2u6miwhv.eu-north-1.rds.amazonaws.com/postgres?charset=utf8&parseTime=True&loc=Local",
     "auth": "http://127.0.0.1:8002"
 }
